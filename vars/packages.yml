@@ -1,0 +1,53 @@
+---
+apt_packages:
+  # - guake
+  - vim
+  # - git
+  # - gitk
+  # - htop
+  # - iotop
+  # - synaptic
+  # - gdebi
+  # - virtualbox
+  # - vagrant
+  # - nautilus-dropbox
+  # - indicator-multiload
+  # - indicator-cpufreq
+  # - mysql-workbench
+  # - postgresql
+  # - postgresql-contrib
+  # - pgadmin3
+  # - python-pip
+
+third_party:
+  # - { repo: 'ppa:eugenesan/ppa', remove_repo: true, packages: [keepassx] }
+  - { deb: 'https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb' }
+  - { repo: 'ppa:lyzardking/ubuntu-make', packages: [ubuntu-make] }
+  # - { repo: 'ppa:fossfreedom/indicator-sysmonitor', packages: [indicator-sysmonitor] }
+  # - { repo: 'deb http://repository.spotify.com stable non-free', key: { id: 0DF731E45CE24F27EEEB1450EFDC8610341D9410, server: keyserver.ubuntu.com }, packages: [spotify-client] }
+  # - { repo: 'ppa:webupd8team/atom', packages: [atom] }
+  # - { repo: 'ppa:ondrej/php', packages: [php7.1] }
+  # - { deb: 'https://downloads.slack-edge.com/linux_releases/slack-desktop-3.0.5-amd64.deb' }
+  - { sh_url: 'https://yake.amsdard.io/install.sh', sh_path: '/tmp/yake_install.sh' }
+  - { remote_archive_to_desktop: 'https://download.jetbrains.com/toolbox/jetbrains-toolbox-1.6.2914.tar.gz' }
+
+# additional:
+#   - php5.6-xml
+#   - php5.6-mbstring
+#   - php5.6-curl
+#   - php5.6-pgsql
+#   - php5.6-xdebug
+#
+#   - lm-sensors
+#   - hddtemp
+
+# http://www.ubucentrum.net/2012/07/psensor-monitorowanie-temperatury.html
+# command: sensors-detect
+# command: sudo service module-init-tools start
+# command: sudo apt-get install psensor
+#
+# - http://download.opensuse.org/repositories/home:/kamilprusko/xUbuntu_16.04/amd64/gnome-pomodoro_0.12.1-1_amd64.deb
+
+# /etc/sysctl.conf:
+# fs.inotify.max_user_watches = 524288
+# sudo sysctl -p --system

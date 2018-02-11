@@ -1,0 +1,5 @@
+sudo VBoxClient --clipboard
+sudo VBoxClient --draganddrop
+sudo VBoxClient --display
+sudo VBoxClient --checkhostversion
+sudo VBoxClient --seamless

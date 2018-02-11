@@ -1,0 +1,11 @@
+- name: stuff
+  hosts: all
+  become: yes
+  become_user: root
+  vars_files:
+    - vars/packages.yml
+    - vars/config.yml
+
+  roles:
+    - { role: vagrant_test, tags: [vagrant_test] }
+    - { role: common, tags: [always] }

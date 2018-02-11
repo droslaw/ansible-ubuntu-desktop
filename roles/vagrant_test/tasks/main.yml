@@ -1,0 +1,38 @@
+---
+- name: Update apt
+  become: yes
+  become_user: root
+  apt: update_cache=yes cache_valid_time="{{ config.apt.cache_ttl }}"
+
+- name: Upgrade apt
+  become: yes
+  become_user: root
+  apt: upgrade=yes
+
+- name: Install GUI and VirtualBox Geuest additions
+  become: yes
+  become_user: root
+  apt: name={{ item }}
+  with_items:
+    - xfce4
+    - virtualbox-guest-dkms
+    - virtualbox-guest-utils
+    - virtualbox-guest-x11
+
+- name: Allow anybody to start GUI
+  become: yes
+  become_user: root
+  lineinfile:
+    path: /etc/X11/Xwrapper.config
+    regexp: '^allowed_users='
+    line: 'allowed_users=anybody'
+
+- name : Run VBoxClient-all
+  become: yes
+  become_user: root
+  script: VBoxClient-all
+
+- name: Run XFCE
+  become: yes
+  become_user: vagrant
+  shell: startxfce4&

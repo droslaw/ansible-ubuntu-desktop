@@ -1,0 +1,21 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+VAGRANTFILE_API_VERSION = "2"
+
+Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
+  config.vm.box = "ubuntu/artful64"
+  config.disksize.size = '20GB'
+  config.vm.provider :virtualbox do |v|
+    v.name = "ansible-ubuntu-local"
+    v.gui = true
+  end
+  config.vm.provision :shell do |shell|
+    shell.inline = 'apt-get update; apt-get -y install python'
+  end
+  config.vm.provision :ansible do |ansible|
+    ansible.playbook = "../playbook.yml"
+    ansible.verbose = "v"
+    ansible.tags = ['vagrant_test']
+  end
+end
