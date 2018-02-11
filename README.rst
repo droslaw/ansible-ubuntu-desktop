@@ -3,21 +3,32 @@ Requirements
 
 1. Ansible
 
-$ sudo apt-get update
-$ sudo apt-get install software-properties-common
-$ sudo apt-add-repository ppa:ansible/ansible
-$ sudo apt-get update
-$ sudo apt-get install ansible
+.. code-block:: bash
+
+  sudo apt-get update
+  sudo apt-get install software-properties-common
+  sudo apt-add-repository ppa:ansible/ansible
+  sudo apt-get update
+  sudo apt-get install ansible
+
 
 2. Vagrant plugin vagrant-disksize
 
-$ vagrant plugin install vagrant-disksize
+.. code-block:: bash
 
-$ sudo apt-get install libffi-dev
-$ gem install ffi
+  vagrant plugin install vagrant-disksize
+
+May be required;
+
+.. code-block:: bash
+
+  sudo apt-get install libffi-dev
+  gem install ffi
 
 
 Run
 ---
 
-`ansible-playbook -i localhost playbook.yml --ask-become-pass`
+.. code-block:: bash
+
+  ansible-playbook -i localhost playbook.yml --ask-become-pass
