@@ -1,0 +1,17 @@
+---
+
+- name: '[DEBUG] deb_options'
+  ansible.builtin.debug:
+    var: deb_options
+  tags: [never, debug]
+
+- name: Install {{ item.deb }}
+  apt: 'deb={{ deb_options.url }}'
+  when: deb_options.url is defined
+
+- name: "[Post install]"
+  include_tasks: ../post_install/main.yml
+  vars:
+    params: '{{ package.post_install }}'
+  when: package.post_install is defined
+

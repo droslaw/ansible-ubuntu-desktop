@@ -5,3 +5,6 @@ config:
     name: vagrant
     home_dir: '/vagrant'
     desktop_dir: '/vagrant'
+
+current_user:
+  name: slawek

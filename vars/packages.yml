@@ -1,35 +1,65 @@
 ---
-apt_packages:
-  # - guake
-  - vim
-  # - git
-  # - gitk
-  # - htop
-  # - iotop
-  # - synaptic
-  # - gdebi
-  # - virtualbox
-  # - vagrant
-  # - nautilus-dropbox
-  # - indicator-multiload
-  # - indicator-cpufreq
-  # - mysql-workbench
-  # - postgresql
-  # - postgresql-contrib
-  # - pgadmin3
-  # - python-pip
 
-third_party:
-  # - { repo: 'ppa:eugenesan/ppa', remove_repo: true, packages: [keepassx] }
-  - { deb: 'https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb' }
-  - { repo: 'ppa:lyzardking/ubuntu-make', packages: [ubuntu-make] }
+install:
+  apt:
+    packages:
+      # - guake
+      #- vim
+      #- git
+      #- gitk
+      #- htop
+      #- iotop
+      - keepassxc
+      - {name: docker.io, post_install: {user: {group: docker}}} # https://www.ibm.com/docs/en/z-logdata-analytics/5.1.0?topic=compose-relocating-docker-root-directory
+      # - synaptic
+      # - gdebi
+      # - virtualbox
+      - vagrant
+      - {name: qemu, post_install: {user: {group: libvirt}}} # change default location of images /var/lib/libvirt/images
+      - libvirt-daemon-system
+      - ebtables
+      - libguestfs-tools
+      - {name: ruby-fog-libvirt, post_install: {shell: "vagrant plugin install vagrant-libvirt"}}
+      - virt-manager
+      # - nautilus-dropbox
+      - indicator-multiload
+      - indicator-cpufreq
+      # - mysql-workbench
+      # - postgresql
+      # - postgresql-contrib
+      # - pgadmin3
+      # - python-pip
+    repos:
+      - {repo: 'ppa:phoerious/keepassxc', remove_repo: true, packages: [keepassxc]}
+
+  deb:
+    - {deb: 'https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb'}
+
+  snap:
+    - nordpass
+    - {name: code, classic: True}
+
+  scripts:
+    - {url: 'https://downloads.nordcdn.com/apps/linux/install.sh', post_install: {user: {group: nordvpn}}}
+
+
+###########################################################################################################
+###########################################################################################################
+
+
+# third_party:
+  # - { repo: 'ppa:phoerious/keepassxc', remove_repo: true, packages: [keepassxc] }
+  #- { deb: 'https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb' }
+  #- { download: 'https://downloads.nordcdn.com/apps/linux/install.sh', shell: True, user: {group: nordvpn} }
+  # - { snap: nordpass, classic: False }
+  # - { snap: code, classic: True }
+  # - { repo: 'ppa:lyzardking/ubuntu-make', packages: [ubuntu-make] }
   # - { repo: 'ppa:fossfreedom/indicator-sysmonitor', packages: [indicator-sysmonitor] }
   # - { repo: 'deb http://repository.spotify.com stable non-free', key: { id: 0DF731E45CE24F27EEEB1450EFDC8610341D9410, server: keyserver.ubuntu.com }, packages: [spotify-client] }
   # - { repo: 'ppa:webupd8team/atom', packages: [atom] }
   # - { repo: 'ppa:ondrej/php', packages: [php7.1] }
   # - { deb: 'https://downloads.slack-edge.com/linux_releases/slack-desktop-3.0.5-amd64.deb' }
-  - { sh_url: 'https://yake.amsdard.io/install.sh', sh_path: '/tmp/yake_install.sh' }
-  - { remote_archive_to_desktop: 'https://download.jetbrains.com/toolbox/jetbrains-toolbox-1.6.2914.tar.gz' }
+  # - { download: 'https://yake.amsdard.io/install.sh', sh_path: '/tmp/yake_install.sh' }
 
 # additional:
 #   - php5.6-xml

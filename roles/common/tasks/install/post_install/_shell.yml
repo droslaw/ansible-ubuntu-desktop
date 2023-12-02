@@ -1,0 +1,21 @@
+---
+
+- name: Normalize apt packages params
+  ansible.builtin.set_fact:
+    params_normalized: []
+    params_normalizing: "{{ (shell is string or shell is mapping)|ternary([shell], shell) }}"
+- name: Normalize apt packages params
+  ansible.builtin.set_fact:
+    params_normalized: "{{ params_normalized | union([ (item is mapping) | ternary(item, {'cmd': item}) ])}}"
+  with_items: "{{params_normalizing}}"
+
+- name: '[DEBUG] run cmd'
+  ansible.builtin.debug:
+    msg: "{{ item.cmd }}"
+  with_items: "{{ params_normalized }}"
+  tags: [never, debug]
+
+- name: "Run commands"
+  ansible.builtin.command:
+    cmd: "{{ item.cmd }}"
+  with_items: "{{ params_normalized }}"

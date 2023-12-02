@@ -1,0 +1,18 @@
+---
+
+- name: '[DEBUG] params'
+  ansible.builtin.debug:
+    var: user_params
+  tags: [never, debug]
+
+- name: '[DEBUG] user'
+  ansible.builtin.debug:
+    var: user
+  tags: [never, debug]
+
+- name: "Add {{ user.name }} to group {{ user_params.group }}"
+  ansible.builtin.user:
+    name: '{{ user.name }}'
+    # append: true
+    group: '{{ user_params.group }}'
+  when: user_params.group is defined

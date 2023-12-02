@@ -1,0 +1,21 @@
+---
+
+- name: Normalize packages params
+  ansible.builtin.set_fact:
+    packages: []
+- name: Normalize snap packages params
+  ansible.builtin.set_fact:
+    packages: "{{ packages | default([]) | union([ (item is mapping) | ternary(item, {'name': item, 'classic': False}) ])}}"
+  with_items: "{{ unnormalized_packages }}"
+
+- name: '[DEBUG] packages'
+  ansible.builtin.debug:
+    var: packages
+  tags: [never, debug]
+
+- name: Install packages
+  include_tasks: _snap.yml
+  with_items: "{{ packages }}"
+  loop_control:
+    label: "{{ package.name }}"
+    loop_var: package

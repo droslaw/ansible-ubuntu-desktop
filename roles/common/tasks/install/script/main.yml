@@ -1,0 +1,7 @@
+---
+
+- name: Install packages
+  include_tasks: _script.yml
+  with_items: "{{ unnormalized_packages }}"
+  loop_control:
+    loop_var: package

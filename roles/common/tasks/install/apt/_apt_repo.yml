@@ -1,0 +1,40 @@
+---
+
+- name: '[DEBUG] apt repo'
+  ansible.builtin.debug:
+    var: repo
+  tags: [never, debug]
+
+- name: Add key {{ repo.key }}
+  apt_key: id={{ repo.key.id }} keyserver={{ repo.key.server }}
+  when: repo.key is defined
+
+- name: Add apt repository {{ repo.repo }}
+  apt_repository: repo={{ repo.repo }} state=present
+  when: repo.repo is defined
+
+- name: Update apt
+  apt: update_cache=yes
+  when: repo.repo is defined
+
+- name: Normalize apt packages params
+  ansible.builtin.set_fact:
+    apt_packages: []
+  when: repo.packages is defined
+- name: Normalize apt packages params
+  ansible.builtin.set_fact:
+    apt_packages: "{{ apt_packages | default([]) | union([ (item is mapping) | ternary(item, {'name': item}) ])}}"
+  with_items: "{{repo.packages}}"
+  when: repo.packages is defined
+
+- name: Install packages
+  include_tasks: _apt_package.yml
+  with_items: "{{ apt_packages }}"
+  loop_control:
+    label: "{{ package.name }}"
+    loop_var: package
+  when: apt_packages is defined
+
+- name: Remove apt repository {{ repo.repo }}
+  apt_repository: repo='deb {{ repo.repo }}' state=absent
+  when: repo.remove_repo is defined and repo.remove_repo == True

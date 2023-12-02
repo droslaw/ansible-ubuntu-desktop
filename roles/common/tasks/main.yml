@@ -1,15 +1,3 @@
 ---
-- name: Update apt
-  become: yes
-  become_user: root
-  apt: update_cache=yes cache_valid_time="{{ config.apt.cache_ttl }}"
 
-- name: Upgrade apt
-  apt: upgrade=yes
-
-- name: install apt packages
-  apt: name={{ item }}
-  with_items: "{{apt_packages}}"
-
-- include_tasks: install.yml
-  with_items: "{{third_party}}"
+- include_tasks: install/main.yml

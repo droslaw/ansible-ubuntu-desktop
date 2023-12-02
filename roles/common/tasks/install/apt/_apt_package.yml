@@ -1,0 +1,15 @@
+---
+
+- name: '[DEBUG] package'
+  ansible.builtin.debug:
+    var: package
+  tags: [never, debug]
+
+- name: "Install {{package.name}}"
+  apt: name={{ package.name }}
+
+- name: "[Post install]"
+  include_tasks: ../post_install/main.yml
+  vars:
+    params: '{{ package.post_install }}'
+  when: package.post_install is defined

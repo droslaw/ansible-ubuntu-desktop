@@ -1,0 +1,26 @@
+---
+
+- name: Install apt 
+  include_tasks: apt/main.yml
+  vars:
+    apt: "{{ install.apt }}"
+  when: install.apt is defined
+
+- name: Install deb
+  include_tasks: deb/main.yml
+  vars:
+    unnormalized_packages: "{{ install.deb }}"
+  when: install.deb is defined
+
+- name: Install snap packages
+  include_tasks: snap/main.yml
+  vars:
+    unnormalized_packages: "{{ install.snap }}"
+  when: install.snap is defined
+
+- name: Install packages from scripts
+  include_tasks: script/main.yml
+  vars:
+    unnormalized_packages: "{{ install.scripts }}"
+  when: install.scripts is defined
+

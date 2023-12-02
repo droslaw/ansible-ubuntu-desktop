@@ -1,4 +1,4 @@
-- name: stuff
+- name: local
   hosts: all
   become: yes
   become_user: root
@@ -7,5 +7,12 @@
     - vars/config.yml
 
   roles:
-    - { role: vagrant_test, tags: [vagrant_test] }
-    - { role: common, tags: [always] }
+    - { role: common }
+
+- name: vagrant
+  hosts: vagrant
+  become: yes
+  become_user: vagrant
+
+  roles:
+    - { role: vagrant_test }

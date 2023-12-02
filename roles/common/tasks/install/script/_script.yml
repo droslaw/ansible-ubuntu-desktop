@@ -1,0 +1,54 @@
+---
+
+- name: '[DEBUG] Run script'
+  ansible.builtin.debug:
+    var: package
+  tags: [never, debug]
+
+- name: Create temp file
+  ansible.builtin.tempfile:
+    state: file
+    suffix: -install-script
+  register: tmp_file
+  when: package.url is defined and package.dest is not defined
+
+- name: Set destination path
+  ansible.builtin.set_fact:
+    destination_path: "{{ (tmp_file is defined) | ternary(tmp_file.path, package.dest) }}"
+  when: package.url is defined
+
+- name: Download {{ package.url }} to {{ destination_path }}
+  ansible.builtin.get_url:
+    url: '{{ package.url }}'
+    dest: '{{ destination_path }}'
+    force: True
+  when: package.url is defined
+
+- name: Set script path
+  ansible.builtin.set_fact:
+    script_path: "{{ (destination_path is defined) | ternary(destination_path, package.path) }}"
+  when: package.url is defined
+
+- name: '[DEBUG] script path'
+  ansible.builtin.debug:
+    var: script_path
+
+- name: Changing perm of {{ script_path }}, adding "+x"
+  file:
+    dest: '{{ script_path }}'
+    mode: a+x
+
+- name: Run {{ script_path }}
+  ansible.builtin.shell: '{{ script_path }}'
+
+- name: Remove {{ script_path }}
+  ansible.builtin.file:
+    path: "{{ script_path }}"
+    state: absent
+  when: package.remove_file is defined and package.remove_file == True and script_path is defined
+
+- name: "[Post install]"
+  include_tasks: ../post_install/main.yml
+  vars:
+    params: '{{ package.post_install }}'
+  when: package.post_install is defined

@@ -1,0 +1,19 @@
+---
+
+- name: "[POST install] Run shell"
+  include_tasks: _shell.yml
+  vars:
+    shell: '{{ params.shell }}'
+  when: params.shell is defined
+
+- name: '[DEBUG] params after shell'
+  ansible.builtin.debug:
+    var: params
+  tags: [never, debug]
+
+- name: "[POST install] Configure user"
+  include_tasks: _user.yml
+  vars:
+    user_params: '{{ params.user }}'
+    user: "{{ current_user }}"
+  when: params.user is defined
