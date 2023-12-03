@@ -24,3 +24,8 @@
     unnormalized_packages: "{{ install.scripts }}"
   when: install.scripts is defined
 
+- name: Install homebrew packages
+  include_tasks: homebrew/main.yml
+  vars:
+    packages: "{{ install.homebrew }}"
+  when: install.homebrew is defined

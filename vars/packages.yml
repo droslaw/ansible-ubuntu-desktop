@@ -4,43 +4,44 @@ install:
   apt:
     packages:
       # - guake
-      #- vim
-      #- git
-      #- gitk
-      #- htop
-      #- iotop
+      - vim
+      - git
+      - gitk
+      - htop
+      - iotop
+      - make
       - keepassxc
       - {name: docker.io, post_install: {user: {group: docker}}} # https://www.ibm.com/docs/en/z-logdata-analytics/5.1.0?topic=compose-relocating-docker-root-directory
       # - synaptic
       # - gdebi
       # - virtualbox
-      - vagrant
-      - {name: qemu, post_install: {user: {group: libvirt}}} # change default location of images /var/lib/libvirt/images
-      - libvirt-daemon-system
-      - ebtables
-      - libguestfs-tools
-      - {name: ruby-fog-libvirt, post_install: {shell: "vagrant plugin install vagrant-libvirt"}}
-      - virt-manager
+      # - vagrant
+      # - {name: qemu, post_install: {user: {group: libvirt}}} # change default location of images /var/lib/libvirt/images
+      # - libvirt-daemon-system
+      # - ebtables
+      # - libguestfs-tools
+      # - {name: ruby-fog-libvirt, post_install: {shell: "vagrant plugin install vagrant-libvirt"}}
+      # - virt-manager
       # - nautilus-dropbox
-      - indicator-multiload
-      - indicator-cpufreq
+      # - indicator-multiload
+      # - indicator-cpufreq
       # - mysql-workbench
       # - postgresql
       # - postgresql-contrib
       # - pgadmin3
       # - python-pip
-    repos:
-      - {repo: 'ppa:phoerious/keepassxc', remove_repo: true, packages: [keepassxc]}
+    # repos:
+    #   - {repo: 'ppa:phoerious/keepassxc', remove_repo: true, packages: [keepassxc]}
 
-  deb:
-    - {deb: 'https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb'}
+  # deb:
+  #   - {deb: 'https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb'}
 
-  snap:
-    - nordpass
-    - {name: code, classic: True}
+  # snap:
+  #   - nordpass
+  #   - {name: code, classic: True}
 
-  scripts:
-    - {url: 'https://downloads.nordcdn.com/apps/linux/install.sh', post_install: {user: {group: nordvpn}}}
+  # scripts:
+  #   - {url: 'https://downloads.nordcdn.com/apps/linux/install.sh', post_install: {user: {group: nordvpn}}}
 
 
 ###########################################################################################################

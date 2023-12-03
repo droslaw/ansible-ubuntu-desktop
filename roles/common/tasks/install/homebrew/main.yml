@@ -1,0 +1,16 @@
+---
+
+- name: Normalize packages params
+  ansible.builtin.set_fact:
+    normalized_packages: []
+- name: Normalize deb packages params
+  ansible.builtin.set_fact:
+    normalized_packages: "{{ normalized_packages | default([]) | union([ (item is mapping) | ternary(item, {'name': item}) ])}}"
+  with_items: "{{ packages }}"
+
+- name: Install packages
+  include_tasks: _homebrew.yml
+  with_items: "{{ normalized_packages }}"
+  loop_control:
+    label: "{{ package.name }}"
+    loop_var: package
