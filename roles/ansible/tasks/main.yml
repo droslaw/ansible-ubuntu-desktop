@@ -1,0 +1,10 @@
+
+
+- name: Config ansible
+  ansible.builtin.blockinfile:
+    path: ~/.ansible.cfg
+    block: |
+      [defaults]
+      inventory = hosts
+      callbacks_enabled = profile_tasks
+    create: yes
